@@ -5,6 +5,8 @@ package cmd
 
 import (
 	"fmt"
+	"net/http"
+	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -24,37 +26,21 @@ var scrapeCmd = &cobra.Command{
 
 func runscrape(cmd *cobra.Command, args []string) {
 	targets, _ := cmd.Flags().GetStringSlice("targets")
-	fmt.Println("Target Slice:", targets)
-	// method, _ := cmd.Flags().GetString("method")
-	// target, _ := cmd.Flags().GetString("target")
-	// fmt.Println("Method:", method)
-	// fmt.Println("Target:", target)
 
-	// request, err := http.NewRequest(method, target, nil)
-	// if err != nil {
-	// 	fmt.Println("Error:", err)
-	// 	return
-	// }
+	client := &http.Client{}
+	for _, targ := range targets {
 
-	// client := &http.Client{}
-	// response, err := client.Do(request)
-	// if err != nil {
-	// 	fmt.Println("Client Request Error", err)
-	// 	return
-	// }
-	// defer response.Body.Close()
-
-	// scrapeout := outp{
-	// 	url:    target,
-	// 	status: response.StatusCode,
-	// }
-
-	// fmt.Println("URL:", scrapeout.url, ", Status:", scrapeout.status)
-
-}
-
-type outp struct {
-	url    string
-	method string
-	status int
+		splitter := strings.SplitN(targ, "|", 2)
+		method := splitter[0]
+		target := splitter[1]
+		fmt.Println(target, method)
+		request, err := http.NewRequest(method, target, nil)
+		if err != nil {
+			fmt.Println("Error:", err)
+			return
+		}
+		response, err := client.Do(request)
+		fmt.Println(response.StatusCode)
+		fmt.Println("---------------------------")
+	}
 }
