@@ -10,11 +10,8 @@ import (
 )
 
 func init() {
-	var targets []string
 	rootCmd.AddCommand(scrapeCmd)
-	//	scrapeCmd.Flags().StringP("method", "m", "get", "Method (Defaults to GET)")
-	//	scrapeCmd.Flags().StringP("target", "t", "testestest", "URL target (Required)")
-	scrapeCmd.Flags().StringSliceVarP(&targets, "targets", "f", []string{""}, "Define Targets")
+	scrapeCmd.Flags().StringSlice("targets", []string{""}, "Define Targets")
 }
 
 // scrapeCmd represents the scrape command
@@ -26,7 +23,6 @@ var scrapeCmd = &cobra.Command{
 }
 
 func runscrape(cmd *cobra.Command, args []string) {
-	fmt.Println("scrape called")
 	targets, _ := cmd.Flags().GetStringSlice("targets")
 	fmt.Println("Target Slice:", targets)
 	// method, _ := cmd.Flags().GetString("method")
