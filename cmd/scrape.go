@@ -19,8 +19,8 @@ func init() {
 // scrapeCmd represents the scrape command
 var scrapeCmd = &cobra.Command{
 	Use:   "scrape",
-	Short: "scapes sites",
-	Long:  `A longer description`,
+	Short: "scrapes sites",
+	Long:  `example usage: --targets="GET|https://google.com","GET|https://facebook.com/test"`,
 	Run:   runscrape,
 }
 
