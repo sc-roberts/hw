@@ -5,8 +5,6 @@ package cmd
 
 import (
 	"fmt"
-	"net/http"
-	"strings"
 
 	"github.com/spf13/cobra"
 )
@@ -21,26 +19,12 @@ var scrapeCmd = &cobra.Command{
 	Use:   "scrape",
 	Short: "scrapes sites",
 	Long:  `example usage: --targets="GET|https://google.com","GET|https://facebook.com/test"`,
-	Run:   runscrape,
-}
-
-func runscrape(cmd *cobra.Command, args []string) {
-	targets, _ := cmd.Flags().GetStringSlice("targets")
-
-	client := &http.Client{}
-	for _, targ := range targets {
-
-		splitter := strings.SplitN(targ, "|", 2)
-		method := splitter[0]
-		target := splitter[1]
-		fmt.Println(target, method)
-		request, err := http.NewRequest(method, target, nil)
+	Run: func(cmd *cobra.Command, args []string) {
+		// Call Runscrape and ignore the return values
+		_, err := Runscrape(cmd, args)
 		if err != nil {
+			// Handle the error
 			fmt.Println("Error:", err)
-			return
 		}
-		response, err := client.Do(request)
-		fmt.Println(response.StatusCode)
-		fmt.Println("---------------------------")
-	}
+	},
 }

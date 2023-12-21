@@ -11,7 +11,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "hw",
+	Use:   "scrape",
 	Short: "App that has 1 command available atm. - scrape",
 	Long:  `A longer description`,
 	// Uncomment the following line if your bare application
