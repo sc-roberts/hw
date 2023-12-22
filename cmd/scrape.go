@@ -23,7 +23,6 @@ var scrapeCmd = &cobra.Command{
 		// Call Runscrape and ignore the return values
 		_, err := Runscrape(cmd, args)
 		if err != nil {
-			// Handle the error
 			fmt.Println("Error:", err)
 		}
 	},
